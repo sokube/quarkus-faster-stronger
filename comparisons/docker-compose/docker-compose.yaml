@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  postgressb:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pgdatasb:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+  employee-sb:
+    image: employee-sb:0.0.1-SNAPSHOT
+    ports:
+      - "8092:8092"
+    depends_on:
+      - postgressb
+  employee-qk-jvm:
+    image: quarkus-employee-jvm:0.0.1-SNAPSHOT
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+    restart: always
+  employee-qk-native:
+    image: quarkus-employee-native:0.0.1-SNAPSHOT
+    ports:
+      - "8082:8080"
+    depends_on:
+      - postgres
+volumes:
+  pgdata:
+  pgdatasb:

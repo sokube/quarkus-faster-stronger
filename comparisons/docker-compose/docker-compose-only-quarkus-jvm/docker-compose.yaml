@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres
+    command: postgres -c 'max_connections=10000'
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  employee-qk-jvm:
+    image: quarkus-employee-jvm:0.0.1-SNAPSHOT
+    ports:
+      - "8081:8080"
+    deploy:
+      replicas: 20
+    depends_on:
+      - postgres
+volumes:
+  pgdata:
+  pgdatasb:
