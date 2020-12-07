@@ -14,7 +14,7 @@
         <quarkus.platform.version>1.6.1.Final</quarkus.platform.version>
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
         <compiler-plugin.version>3.8.0</compiler-plugin.version>
-        <docker-plugin.version>0.28.0</docker-plugin.version>
+    <!--    <docker-plugin.version>0.28.0</docker-plugin.version>     -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -95,8 +95,9 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <!-- Automatically start PostgreSQL for integration testing - requires Docker -->
+            <!-- Automatically start PostgreSQL for integration testing - requires Docker -->
+<!--            <plugin>
+                
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>${docker-plugin.version}</version>
@@ -150,7 +151,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 
@@ -175,6 +176,10 @@
                                     <goal>native-image</goal>
                                 </goals>
                                 <configuration>
+                                    <!-- see https://github.com/quarkusio/quarkus/blob/master/devtools/maven/src/main/java/io/quarkus/maven/NativeImageMojo.java -->
+                                    <additionalBuildArgs>
+                                        <additionalBuildArg>--static</additionalBuildArg>
+                                    </additionalBuildArgs>
                                     <enableHttpUrlHandler>true</enableHttpUrlHandler>
                                 </configuration>
                             </execution>
