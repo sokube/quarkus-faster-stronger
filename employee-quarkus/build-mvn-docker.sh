@@ -8,6 +8,8 @@ docker build . -f src/main/docker/Dockerfile.jvm -t quarkus-employee-jvm:0.0.1-S
 #./mvnw clean install -Pnative -Dquarkus.native.container-build=true
 #docker build . -f src/main/docker/Dockerfile.native -t quarkus-employee-native:0.0.1-SNAPSHOT
 
-docker build . -f src/main/docker/Dockerfile.native.alpine -t quarkus-employee-native:0.0.1-SNAPSHOT
+#docker build . -f src/main/docker/Dockerfile.native.alpine -t quarkus-employee-native:0.0.1-SNAPSHOT
 
-docker build . -f src/main/docker/Dockerfile.multi.alpine.native -t quarkus-employee-native:0.0.1-SNAPSHOT-ko-unknown-host
+docker build . -f src/main/docker/Dockerfile.scratch.native -t quarkus-employee-native:0.0.1-SNAPSHOT-scratch
+
+#docker build . -f src/main/docker/Dockerfile.multi.alpine.native -t quarkus-employee-native:0.0.1-SNAPSHOT-ko-unknown-host

@@ -2,16 +2,13 @@ k3d cluster delete quarkus-poc
 k3d cluster create quarkus-poc --switch-context
 
 echo "import native image into k3d"
-docker save quarkus-employee-native:0.0.1-SNAPSHOT -o quarkus-employee-native.tar.gz
-k3d image import quarkus-employee-native.tar.gz  -c quarkus-poc
+k3d image import quarkus-employee-native:0.0.1-SNAPSHOT-scratch  -c quarkus-poc
 
 echo "import employee image into k3d"
-docker save quarkus-employee-jvm:0.0.1-SNAPSHOT -o quarkus-employee-jvm.tar.gz
-k3d image import quarkus-employee-jvm.tar.gz  -c quarkus-poc
+k3d image import quarkus-employee-jvm:0.0.1-SNAPSHOT  -c quarkus-poc
 
 echo "import spring-boot image into k3d"
-docker save employee-sb:0.0.1-SNAPSHOT -o quarkus-employee-sb.tar.gz
-k3d image import quarkus-employee-sb.tar.gz  -c quarkus-poc
+k3d image import employee-sb:0.0.1-SNAPSHOT -c quarkus-poc
 
 rm -rf *.tar.gz
 

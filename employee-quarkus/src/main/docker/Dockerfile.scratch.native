@@ -1,0 +1,63 @@
+####
+# This Dockerfile is used in order to build a container that runs the Quarkus application in native (no JVM) mode
+####
+### Image for getting maven dependencies and then acting as a cache for the next image
+FROM maven:3.6.3-jdk-11 as mavencache
+ENV MAVEN_OPTS=-Dmaven.repo.local=/mvnrepo
+COPY pom.xml /app/
+WORKDIR /app
+RUN mvn test-compile -DskipTests=true dependency:resolve dependency:resolve-plugins
+### Image for building the native binary
+FROM oracle/graalvm-ce:20.3.0-java11 AS native-image
+ENV MAVEN_OPTS=-Dmaven.repo.local=/mvnrepo
+COPY --from=mavencache /mvnrepo/ /mvnrepo/
+COPY . /app
+WORKDIR /app
+ENV GRAALVM_HOME=/usr
+# DNS lookup fix:
+#    https://github.com/oracle/graal/issues/1151
+#    https://github.com/oracle/graal/issues/624
+#    https://github.com/oracle/graal/issues/571
+# This is because doing DNS lookups requires a 'full' libc, and 'minimal' libc's such as musl and scratch aren't currently sufficient for graal.
+# But problems arise when an execution path tries to call something in libc or libstdc++ which is the case with DNS lookups.
+# Luckily GraalVM has a way to also include the necessary system libraries in the static native image! There is a library called musl libc that you can include in your native image.
+#
+# Note that using "-H:UseMuslC=bundle/" no longer works in graalvm 20.2.0 and > (https://github.com/jamesward/graalvm-dns-issue)
+# see GraalVM Native Image Tips & Tricks: https://jamesward.com/2020/05/07/graalvm-native-image-tips-tricks/:
+#
+# so you need to use : https://github.com/oracle/graal/blob/master/substratevm/StaticImages.md
+# see https://github.com/oracle/graal/issues/2824
+
+# BEGIN PRE-REQUISITES FOR STATIC NATIVE IMAGES FOR GRAAL 20.3.0
+ARG RESULT_LIB="/staticlibs"
+RUN gu install native-image  && \
+    mkdir ${RESULT_LIB} && \
+    curl -L -o musl.tar.gz https://musl.libc.org/releases/musl-1.2.1.tar.gz && \
+    mkdir musl && tar -xvzf musl.tar.gz -C musl --strip-components 1 && cd musl && \
+    ./configure --disable-shared --prefix=${RESULT_LIB} && \
+    make && make install && \
+    cd .. && rm -rf /muscl && rm -f /musl.tar.gz
+ENV PATH="$PATH:${RESULT_LIB}/bin"
+ENV CC="musl-gcc"
+RUN curl -L -o zlib.tar.gz https://zlib.net/zlib-1.2.11.tar.gz && \
+   mkdir zlib && tar -xvzf zlib.tar.gz -C zlib --strip-components 1 && cd zlib && \
+   ./configure --static --prefix=${RESULT_LIB} && \
+    make && make install && \
+    cd .. && rm -rf /zlib && rm -f /zlib.tar.gz
+#END PRE-REQUISITES FOR STATIC NATIVE IMAGES FOR GRAAL 20.3.0
+RUN ./mvnw package -Pscratch -Dmaven.test.skip=true -DskipTests=true && \
+    # Prepare everything for final image
+    mkdir -p /dist && \
+    cp /app/target/*-runner /dist/application
+### Final image based on scratch containing only the binary
+FROM scratch
+COPY --chown=1000 --from=native-image /dist /work
+# it is possible to add timezone, certificat and new user/group
+# COPY --from=xxx /usr/share/zoneinfo /usr/share/zoneinfo
+# COPY --from=xxx /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+# COPY --from=xxx /etc/passwd /etc/passwd
+# COPY --from=xxx /etc/group /etc/group
+EXPOSE 8080
+USER 1000
+WORKDIR /work/
+CMD ["./application", "-Djava.io.tmpdir=/work/tmp"]
