@@ -1,6 +1,6 @@
-export GRAALVM_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-lts-java11-19.3.3/Contents/Home
-export JAVA_HOME=$GRAALVM_HOME
-export PATH=/Library/Java/JavaVirtualMachines/graalvm-ce-lts-java11-19.3.3/Contents/Home/bin:"$PATH"
+#export GRAALVM_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-lts-java11-19.3.3/Contents/Home
+#export JAVA_HOME=$GRAALVM_HOME
+#export PATH=/Library/Java/JavaVirtualMachines/graalvm-ce-lts-java11-19.3.3/Contents/Home/bin:"$PATH"
 
 #jvm standard build
 ./mvnw clean install
