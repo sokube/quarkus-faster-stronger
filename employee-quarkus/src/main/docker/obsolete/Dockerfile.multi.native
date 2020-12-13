@@ -1,0 +1,33 @@
+####
+# This Dockerfile is used in order to build a container that runs the Quarkus application in native (no JVM) mode
+####
+
+### Image for getting maven dependencies and then acting as a cache for the next image
+FROM maven:3.6.3-jdk-11 as mavencache
+ENV MAVEN_OPTS=-Dmaven.repo.local=/mvnrepo
+COPY pom.xml /app/
+WORKDIR /app
+RUN mvn test-compile dependency:resolve dependency:resolve-plugins
+
+### Image for building the native binary
+FROM oracle/graalvm-ce:19.3.3 AS native-image
+#-java11 AS native-image
+ENV MAVEN_OPTS=-Dmaven.repo.local=/mvnrepo
+COPY --from=mavencache /mvnrepo/ /mvnrepo/
+COPY .. /app
+WORKDIR /app
+ENV GRAALVM_HOME=/usr
+RUN gu install native-image && \
+    ./mvnw package -Pnative -Dmaven.test.skip=true && \
+    # -Dquarkus.native.debug.enabled=true -Dquarkus.native.native-image-xmx=8G
+    # Prepare everything for final image
+    mkdir -p /dist && \
+    cp /app/target/*-runner /dist/application
+
+FROM registry.access.redhat.com/ubi8/ubi-minimal
+COPY --from=native-image /dist /work
+WORKDIR /work/
+COPY target/*-runner /work/application
+RUN chmod 775 /work
+EXPOSE 8080
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]

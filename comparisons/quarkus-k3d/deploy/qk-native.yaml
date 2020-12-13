@@ -24,7 +24,7 @@ spec:
         app: qk-native-employee
     spec:
       containers:
-      - image: docker.io/library/quarkus-employee-native:0.0.1-SNAPSHOT
+      - image: docker.io/library/quarkus-employee-native:0.0.1-SNAPSHOT-scratch
         imagePullPolicy: IfNotPresent
         name: quarkusemployee
         ports:

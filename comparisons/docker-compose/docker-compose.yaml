@@ -30,9 +30,10 @@ services:
       - postgres
     restart: always
   employee-qk-native:
-    image: quarkus-employee-native:0.0.1-SNAPSHOT
+    image: quarkus-employee-native:0.0.1-SNAPSHOT-scratch
     ports:
       - "8082:8080"
+    restart: always
     depends_on:
       - postgres
 volumes:
