@@ -8,7 +8,7 @@ COPY pom.xml /app/
 WORKDIR /app
 RUN mvn test-compile -DskipTests=true dependency:resolve dependency:resolve-plugins
 ### Image for building the native binary
-FROM oracle/graalvm-ce:20.3.0-java11 AS native-image
+FROM ghcr.io/graalvm/graalvm-ce:ol7-java11-20.3.2 AS native-image
 ENV MAVEN_OPTS=-Dmaven.repo.local=/mvnrepo
 COPY --from=mavencache /mvnrepo/ /mvnrepo/
 COPY . /app
