@@ -3,13 +3,13 @@
 ####
 ### Image for getting maven dependencies and then acting as a cache for the next image
 FROM maven:3.6.3-jdk-11 as mavencache
-ENV MAVEN_OPTS=-Dmaven.repo.local=/mvnrepo
+ENV MAVEN_OPTS="-Dmaven.repo.local=/mvnrepo"
 COPY pom.xml /app/
 WORKDIR /app
 RUN mvn test-compile -DskipTests=true dependency:resolve dependency:resolve-plugins
 ### Image for building the native binary
 FROM ghcr.io/graalvm/graalvm-ce:ol7-java11-20.3.2 AS native-image
-ENV MAVEN_OPTS=-Dmaven.repo.local=/mvnrepo
+ENV MAVEN_OPTS="-Dmaven.repo.local=/mvnrepo"
 COPY --from=mavencache /mvnrepo/ /mvnrepo/
 COPY . /app
 WORKDIR /app

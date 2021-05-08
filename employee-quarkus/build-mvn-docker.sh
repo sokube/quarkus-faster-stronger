@@ -4,7 +4,7 @@
 
 #jvm standard build
 ./mvnw clean install
-docker build . -f src/main/docker/Dockerfile.jvm -t quarkus-employee-jvm:0.0.1-SNAPSHOT
+docker build . -f src/main/docker/Dockerfile.jvm -t quarkus-employee-jvm:0.0.2-SNAPSHOT
 
 # multi stage from scratch build
-docker build . -f src/main/docker/Dockerfile.scratch.native -t quarkus-employee-native:0.0.1-SNAPSHOT-scratch
+docker build . -f src/main/docker/Dockerfile.scratch.native -t quarkus-employee-native:0.0.2-SNAPSHOT-scratch
