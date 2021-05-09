@@ -6,6 +6,6 @@ do
   
   echo "will kill $SB_TO_KILL - $QK_NATIVE_TO_KILL - $QK_JVM_TO_KILL"
   kubectl delete --force $SB_TO_KILL $QK_NATIVE_TO_KILL $QK_JVM_TO_KILL
-  sleep 15
+  sleep 10
 done
 

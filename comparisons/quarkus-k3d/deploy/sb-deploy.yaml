@@ -7,7 +7,7 @@ metadata:
   namespace: default
 spec:
   progressDeadlineSeconds: 600
-  replicas: 1
+  replicas: 2
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -27,9 +27,16 @@ spec:
       - image: docker.io/library/employee-sb:0.0.1-SNAPSHOT
         imagePullPolicy: IfNotPresent
         name: employeespringboot
+        readinessProbe:
+          tcpSocket:
+            port: 8092
+          initialDelaySeconds: 1
+          periodSeconds: 1
         ports:
           - containerPort: 8092
-        resources: {}
+        resources:
+          limits:
+            memory: 500Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst

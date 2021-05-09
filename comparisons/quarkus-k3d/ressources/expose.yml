@@ -1,0 +1,156 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2021-05-08T14:26:32Z"
+  labels:
+    app: sb-employee
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:externalTrafficPolicy: {}
+        f:ports:
+          .: {}
+          k:{"port":8092,"protocol":"TCP"}:
+            .: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+        f:selector:
+          .: {}
+          f:app: {}
+        f:sessionAffinity: {}
+        f:type: {}
+    manager: kubectl
+    operation: Update
+    time: "2021-05-08T14:26:32Z"
+  name: sb-employee-external
+  namespace: default
+  resourceVersion: "2477"
+  uid: 68c6b4df-065e-46fc-badb-66b3e8c3695d
+spec:
+  clusterIP: 10.43.152.61
+  clusterIPs:
+  - 10.43.152.61
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 32318
+    port: 8092
+    protocol: TCP
+    targetPort: 8092
+  selector:
+    app: sb-employee
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2021-05-08T14:27:11Z"
+  labels:
+    app: qk-jvm-employee
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:externalTrafficPolicy: {}
+        f:ports:
+          .: {}
+          k:{"port":8080,"protocol":"TCP"}:
+            .: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+        f:selector:
+          .: {}
+          f:app: {}
+        f:sessionAffinity: {}
+        f:type: {}
+    manager: kubectl
+    operation: Update
+    time: "2021-05-08T14:27:11Z"
+  name: qk-jvm-employee-external
+  namespace: default
+  resourceVersion: "2507"
+  uid: 1078322d-38a9-489b-964f-f73a157795de
+spec:
+  clusterIP: 10.43.151.7
+  clusterIPs:
+  - 10.43.151.7
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 31450
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: qk-jvm-employee
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2021-05-08T14:27:22Z"
+  labels:
+    app: qk-native-employee
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:externalTrafficPolicy: {}
+        f:ports:
+          .: {}
+          k:{"port":8080,"protocol":"TCP"}:
+            .: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+        f:selector:
+          .: {}
+          f:app: {}
+        f:sessionAffinity: {}
+        f:type: {}
+    manager: kubectl
+    operation: Update
+    time: "2021-05-08T14:27:22Z"
+  name: qk-native-employee-external
+  namespace: default
+  resourceVersion: "2521"
+  uid: e20fe2d3-931c-4bdf-a2cf-c074c3702625
+spec:
+  clusterIP: 10.43.254.62
+  clusterIPs:
+  - 10.43.254.62
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 31524
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: qk-native-employee
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}

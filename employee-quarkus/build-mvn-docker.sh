@@ -3,7 +3,7 @@
 #export PATH=/Library/Java/JavaVirtualMachines/graalvm-ce-lts-java11-19.3.3/Contents/Home/bin:"$PATH"
 
 #jvm standard build
-./mvnw clean install
+mvn clean install
 docker build . -f src/main/docker/Dockerfile.jvm -t quarkus-employee-jvm:0.0.2-SNAPSHOT
 
 # multi stage from scratch build

@@ -1,8 +1,6 @@
-k3d cluster delete quarkus-poc
-k3d cluster create quarkus-poc -p "8092:32318@loadbalancer" -p "8081:31450@loadbalancer" -p "8080:31524@loadbalancer" --agents 2
-
-#echo "import postgres image into k3d -- when bad connection"
-#k3d image import postgres:latest  -c quarkus-poc
+kubectl delete -f svc
+kubectl delete -f deploy
+kubectl delete -f check
 
 echo "import native image into k3d"
 k3d image import quarkus-employee-native:0.0.2-SNAPSHOT-scratch  -c quarkus-poc
@@ -13,7 +11,6 @@ k3d image import quarkus-employee-jvm:0.0.2-SNAPSHOT  -c quarkus-poc
 echo "import spring-boot image into k3d"
 k3d image import employee-sb:0.0.1-SNAPSHOT -c quarkus-poc
 
-rm -rf *.tar.gz
 
 kubectl apply -f svc/postgres-qk-service.yaml
 kubectl apply -f svc/postgres-springboot-service.yaml
@@ -26,8 +23,8 @@ sleep 15
 kubectl apply -f svc
 kubectl apply -f deploy
 
-echo "Wait for starting... 30s"
-sleep 30
+echo "Wait for starting... 15s"
+sleep 15
 
 echo "create busybox pod to get connectivity checks"
 kubectl create -f check
