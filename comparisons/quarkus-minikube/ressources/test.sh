@@ -9,4 +9,3 @@ kubectl create clusterrolebinding dashboard-admin-sa --clusterrole=cluster-admin
 
 kubectl describe secrets
 kubectl proxy
-
