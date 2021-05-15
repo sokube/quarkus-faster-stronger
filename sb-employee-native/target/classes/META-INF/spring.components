@@ -1,0 +1,9 @@
+#
+#Thu May 13 21:46:41 CEST 2021
+ch.sokube.employee.resources.ReactiveController=org.springframework.stereotype.Component
+ch.sokube.employee.services.PersonnesService=org.springframework.stereotype.Component
+ch.sokube.employee.resources.PersonsResource=org.springframework.stereotype.Component
+ch.sokube.employee.repos.PersonRepo=org.springframework.data.repository.Repository
+ch.sokube.employee.entities.Person=javax.persistence.Entity
+ch.sokube.employee.entities.Competency=javax.persistence.Entity
+ch.sokube.employee.EmployeeApplication=org.springframework.stereotype.Component

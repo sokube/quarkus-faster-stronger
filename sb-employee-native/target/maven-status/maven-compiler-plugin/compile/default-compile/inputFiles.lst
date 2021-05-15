@@ -1,0 +1,8 @@
+/home/pll/quarkus-faster-stronger/sb-employee-native/complete/src/main/java/ch/sokube/employee/entities/Competency.java
+/home/pll/quarkus-faster-stronger/sb-employee-native/complete/src/main/java/ch/sokube/employee/EmployeeApplication.java
+/home/pll/quarkus-faster-stronger/sb-employee-native/complete/src/main/java/ch/sokube/employee/entities/Person.java
+/home/pll/quarkus-faster-stronger/sb-employee-native/complete/src/main/java/ch/sokube/employee/repos/PersonRepo.java
+/home/pll/quarkus-faster-stronger/sb-employee-native/complete/src/main/java/ch/sokube/employee/resources/ReactiveController.java
+/home/pll/quarkus-faster-stronger/sb-employee-native/complete/src/main/java/ch/sokube/employee/entities/Status.java
+/home/pll/quarkus-faster-stronger/sb-employee-native/complete/src/main/java/ch/sokube/employee/resources/PersonsResource.java
+/home/pll/quarkus-faster-stronger/sb-employee-native/complete/src/main/java/ch/sokube/employee/services/PersonnesService.java
