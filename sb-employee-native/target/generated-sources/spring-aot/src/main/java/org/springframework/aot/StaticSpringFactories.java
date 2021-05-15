@@ -192,8 +192,8 @@ public abstract class StaticSpringFactories {
     names.add(RepositoryFactorySupport.class, "org.springframework.data.jpa.repository.support.JpaRepositoryFactory");
     factories.add(ProxyUtils.ProxyDetector.class, () -> org.springframework.data.jpa.util._FactoryProvider.hibernateProxyDetector());
     factories.add(org.springframework.data.web.config.SpringDataJacksonModules.class, () -> new org.springframework.data.web.config.SpringDataJacksonConfiguration());
-    factories.add(org.springframework.beans.BeanInfoFactory.class, () -> new org.springframework.beans.ExtendedBeanInfoFactory());
     factories.add(org.springframework.boot.diagnostics.FailureAnalyzer.class, () -> new org.springframework.nativex.GeneratedClassNotFoundExceptionFailureAnalyzer());
     factories.add(org.springframework.context.ApplicationListener.class, () -> new org.springframework.nativex.NativeListener());
+    factories.add(org.springframework.beans.BeanInfoFactory.class, () -> new org.springframework.beans.ExtendedBeanInfoFactory());
   }
 }

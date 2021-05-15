@@ -1,16 +1,17 @@
 package ch.sokube.employee.resources;
 
 
+import ch.sokube.employee.entities.Competency;
 import ch.sokube.employee.entities.Person;
 import ch.sokube.employee.entities.Status;
 import ch.sokube.employee.repos.PersonRepo;
-import ch.sokube.employee.services.PersonnesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * REST Controller for crud on Persons
@@ -21,11 +22,15 @@ public class PersonsResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonsResource.class);
 
-    @Autowired
-    PersonnesService personnesService;
-
-    @Autowired
     PersonRepo repo;
+
+    private final static List<String> competencies = Arrays.asList("KUBE","ANSIBLE","JAVA","ANGULAR","KAFKA","ELASTIC");
+
+
+    PersonsResource(PersonRepo repo) {
+        this.repo = repo;
+    }
+
     
     @GetMapping
     public String hello() {
@@ -49,8 +54,23 @@ public class PersonsResource {
 
     @GetMapping(path = "generate")
     public void generateEmployee() {
-        personnesService.generateEmployee();
+        LocalDate d1 = LocalDate.of(1980,1,1);
+        // Random on 10 years = 3600 days
+        for(int i = 0; i < 100; i++) {
+            LocalDate birthDate =  d1.plusDays(getRandom(3600));
+
+            Person p = new Person();
+            p.name = "Person " + i;
+            p.birth = birthDate;
+            p.status = i%2==0? Status.CANDIDATE : Status.EMPLOYEE;
+            p.competencies.addAll(competencies.stream().map(aComp -> new Competency(aComp, getRandom(10), p)).collect(Collectors.toList()));
+            repo.save(p);
+        }
     }
+    public static int getRandom(int max) {
+        return (int) (Math.random()*max);
+    }
+
 
     private static final int HUGE_SIZE = 5_000;
 

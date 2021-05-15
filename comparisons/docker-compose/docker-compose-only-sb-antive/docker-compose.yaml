@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  postgressb:
+    image: postgres
+    command: postgres -c 'max_connections=10000'
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pgdatasb:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+  employee-sb:
+    image:  employee-sb:0.0.1-SNAPSHOT
+    depends_on:
+      - postgressb
+    deploy:
+      replicas: 20
+volumes:
+  pgdatasb:

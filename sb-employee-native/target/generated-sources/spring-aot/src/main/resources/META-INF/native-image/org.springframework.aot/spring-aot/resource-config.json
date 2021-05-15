@@ -74,9 +74,6 @@
         "pattern": "ch/sokube/employee/resources/ReactiveController.class"
       },
       {
-        "pattern": "ch/sokube/employee/services/PersonnesService.class"
-      },
-      {
         "pattern": "com/fasterxml/jackson/annotation/JsonAnyGetter.class"
       },
       {

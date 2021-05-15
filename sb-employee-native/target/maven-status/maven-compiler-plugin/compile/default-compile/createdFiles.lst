@@ -4,5 +4,4 @@ ch/sokube/employee/EmployeeApplication.class
 ch/sokube/employee/entities/Person.class
 ch/sokube/employee/resources/ReactiveController.class
 ch/sokube/employee/entities/Competency.class
-ch/sokube/employee/services/PersonnesService.class
 ch/sokube/employee/repos/PersonRepo.class
