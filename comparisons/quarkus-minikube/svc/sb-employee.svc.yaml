@@ -1,14 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: "2020-08-12T05:48:24Z"
   labels:
     app: sb-employee
   name: sb-employee
   namespace: default
-  resourceVersion: "6683"
-  selfLink: /api/v1/namespaces/default/services/sb-employee
-  uid: 5ba7a02a-2a8f-4e8c-98b2-bd51099c733b
 spec:
   ports:
   - port: 8092

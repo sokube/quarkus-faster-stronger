@@ -10,7 +10,7 @@ spec:
   - args:
     - sh
     - -c
-    - while(true) do echo "requesting..."; wget -T1 -O- http://qk-jvm-employee:8081/hello ; sleep 1.2; done
+    - while(true) do echo "requesting..."; wget -T1 -O- http://qk-jvm-employee:8081/hello ; sleep 0.2; done
     image: busybox
     name: curling-jvm-qk
     resources:

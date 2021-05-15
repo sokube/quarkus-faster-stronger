@@ -3,8 +3,8 @@ kubectl apply -f svc/postgres-springboot-service.yaml
 kubectl apply -f deploy/pg-qk-deploy.yml
 kubectl apply -f deploy/pg-sb-deploy.yml
 
-echo "Wait for starting db... 15s"
-sleep 15
+echo "Wait for starting db... 30s"
+sleep 30
 
 kubectl apply -f svc
 kubectl apply -f deploy

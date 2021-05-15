@@ -2,16 +2,6 @@ kubectl delete -f svc
 kubectl delete -f deploy
 kubectl delete -f check
 
-echo "import native image into k3d"
-k3d image import quarkus-employee-native:0.0.2-SNAPSHOT-scratch  -c quarkus-poc
-
-echo "import employee image into k3d"
-k3d image import quarkus-employee-jvm:0.0.2-SNAPSHOT  -c quarkus-poc
-
-echo "import spring-boot image into k3d"
-k3d image import employee-sb:0.0.1-SNAPSHOT -c quarkus-poc
-
-
 kubectl apply -f svc/postgres-qk-service.yaml
 kubectl apply -f svc/postgres-springboot-service.yaml
 kubectl apply -f deploy/pg-qk-deploy.yml
