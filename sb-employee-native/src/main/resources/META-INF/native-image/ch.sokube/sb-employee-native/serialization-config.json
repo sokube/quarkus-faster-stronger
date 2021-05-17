@@ -1,0 +1,8 @@
+[
+  {"name":"ch.sokube.employee.entities.Competency"},
+  {"name":"ch.sokube.employee.entities.Person"},
+  {"name":"ch.sokube.employee.entities.Status"},
+  {"name":"java.time.LocalDate"},
+  {"name":"java.lang.String"},
+  {"name":"java.time.Ser"}
+]

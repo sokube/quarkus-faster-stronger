@@ -6,15 +6,15 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - /home/pll/pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
   employee-qk-native:
-    image: quarkus-employee-native:0.0.1-SNAPSHOT-scratch
+    image: quarkus-employee-native:0.0.2-SNAPSHOT-scratch
     ports:
       - "8081:8080"
     deploy:
-      replicas: 100
+      replicas: 20
     restart: "always"
     depends_on:
       - postgres

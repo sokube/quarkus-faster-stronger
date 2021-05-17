@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: postgres-qk-deploy
+  name: postgres-qk-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-qk-deploy
+  template:
+    metadata:
+      labels:
+        app: postgres-qk-deploy
+    spec:
+      containers:
+      - image: postgres
+        name: postgres
+        env:
+          - name: POSTGRES_PASSWORD
+            value: postgres
+        ports:
+          - containerPort: 5432

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: curling-native-sb
+  name: curling-native-sb
+spec:
+  containers:
+  - args:
+    - sh
+    - -c
+    - while(true) do echo "requesting..."; wget -T1 -O- http://sb-native-employee:8093/hello ; sleep 0.2; done
+    image: busybox
+    name: curling-native-qk
+  restartPolicy: Always

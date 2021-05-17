@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sb-employee
+  name: sb-employee
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sb-employee
+  template:
+    metadata:
+      labels:
+        app: sb-employee
+    spec:
+      containers:
+      - image: employee-sb:0.0.1-SNAPSHOT
+        imagePullPolicy: IfNotPresent
+        name: sb-employee
+        readinessProbe:
+          tcpSocket:
+            port: 8092
+          initialDelaySeconds: 1
+          periodSeconds: 1
+        ports:
+          - containerPort: 8092
+        resources:
+          limits:
+            memory: 500Mi
+      restartPolicy: Always

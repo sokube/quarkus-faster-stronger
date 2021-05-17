@@ -5,10 +5,12 @@ import ch.sokube.employee.entities.Person;
 import ch.sokube.employee.entities.Status;
 import ch.sokube.employee.repos.PersonRepo;
 import ch.sokube.employee.services.PersonnesService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * REST Controller for crud on Persons
@@ -16,6 +18,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/hello")
 public class PersonsResource {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonsResource.class);
 
     @Autowired
     PersonnesService personnesService;
@@ -46,6 +50,26 @@ public class PersonsResource {
     @GetMapping(path = "generate")
     public void generateEmployee() {
         personnesService.generateEmployee();
+    }
+
+    private static final int HUGE_SIZE = 5_000;
+
+    @GetMapping(path = "load", produces = "text/plain")
+    public void load() {
+        LOGGER.info("start load memory");
+        Map<Integer, Object> leakMap = new HashMap<>();
+        for (int i = 0; i < HUGE_SIZE; ++i) {
+            leakMap.put(i * 2, getListWithRandomNumber());
+        }
+        LOGGER.info("end load memory");
+    }
+
+    private List<Integer> getListWithRandomNumber() {
+        final List<Integer> originalHugeIntList = new ArrayList<>();
+        for (int i = 0; i < HUGE_SIZE; ++i) {
+            originalHugeIntList.add(new Random().nextInt());
+        }
+        return originalHugeIntList.subList(0, 1);
     }
 
 }
