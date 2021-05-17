@@ -46,8 +46,13 @@ REQUESTS_SB_NATIVE=$(cat curling-native-sb.log | grep requesting | wc -l)
 REQUESTS_QK_JVM=$(cat curling-jvm-qk.log | grep requesting | wc -l)
 REQUESTS_QK_NATIVE=$(cat curling-native-qk.log | grep requesting | wc -l)
 
+RATIO_QK_NATIVE=$((100 - $NB_QK_NATIVE_FAULTS * 100 / $REQUESTS_QK_NATIVE))
+RATIO_SB_NATIVE=$((100 - $NB_SB_NATIVE_FAULTS * 100 / $REQUESTS_SB_NATIVE))
+RATIO_QK_JVM=$((100 - $NB_QK_JVM_FAULTS * 100 / $REQUESTS_QK_JVM))
+RATIO_SB=$((100 - $NB_SB_FAULTS * 100 / $REQUESTS_SB))
+
 echo "Number of connection refused / Total number of requests "
-echo "   Spring-boot: $NB_SB_FAULTS / $REQUESTS_SB"
-echo "   Spring-boot native: $NB_SB_NATIVE_FAULTS / $REQUESTS_SB_NATIVE"
-echo "   Quarkus standard JVM: $NB_QK_JVM_FAULTS / $REQUESTS_QK_JVM"
-echo "   Quarkus GraalVM: $NB_QK_NATIVE_FAULTS / $REQUESTS_QK_NATIVE"
+echo "   Spring-boot: $NB_SB_FAULTS / $REQUESTS_SB (Success: $RATIO_SB %)"
+echo "   Spring-boot native: $NB_SB_NATIVE_FAULTS / $REQUESTS_SB_NATIVE (Success: $RATIO_SB_NATIVE %)"
+echo "   Quarkus standard JVM: $NB_QK_JVM_FAULTS / $REQUESTS_QK_JVM (Success: $RATIO_QK_JVM %)"
+echo "   Quarkus GraalVM: $NB_QK_NATIVE_FAULTS / $REQUESTS_QK_NATIVE (Success: $RATIO_QK_NATIVE %)"

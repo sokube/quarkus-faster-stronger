@@ -1,4 +1,4 @@
-for i in {1..6}
+for i in {1..12}
 do
   SB_TO_KILL=$(kubectl get po --selector "app=sb-employee" --field-selector=status.phase=Running --output=name | head -n1)
   SB_NATIVE_TO_KILL=$(kubectl get po --selector "app=sb-native-employee" --field-selector=status.phase=Running --output=name | head -n1)
