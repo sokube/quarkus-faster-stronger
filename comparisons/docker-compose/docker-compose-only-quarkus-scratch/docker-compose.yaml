@@ -14,7 +14,7 @@ services:
     ports:
       - "8081:8080"
     deploy:
-      replicas: 1
+      replicas: 20
     restart: "always"
     depends_on:
       - postgres
