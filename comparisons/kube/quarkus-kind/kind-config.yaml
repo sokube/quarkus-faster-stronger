@@ -1,0 +1,17 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  extraPortMappings:
+  - containerPort: 32318 # sb
+    hostPort: 8092
+    listenAddress: "0.0.0.0"
+  - containerPort: 31450 # qk jvm
+    hostPort: 8080
+    listenAddress: "0.0.0.0"
+  - containerPort: 31524 # qk native
+    hostPort: 8081
+    listenAddress: "0.0.0.0"
+  - containerPort: 32600 # sb native
+    hostPort: 8093
+    listenAddress: "0.0.0.0"

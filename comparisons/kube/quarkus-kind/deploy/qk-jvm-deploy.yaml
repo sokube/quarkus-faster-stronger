@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: qk-jvm-employee
+  name: qk-jvm-employee
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qk-jvm-employee
+  template:
+    metadata:
+      labels:
+        app: qk-jvm-employee
+    spec:
+      containers:
+      - image: quarkus-employee-jvm:0.0.2-SNAPSHOT
+        imagePullPolicy: IfNotPresent
+        name: qk-employee-jvm
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 1
+        ports:
+          - containerPort: 8080
+        resources:
+          limits:
+            memory: 500Mi
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

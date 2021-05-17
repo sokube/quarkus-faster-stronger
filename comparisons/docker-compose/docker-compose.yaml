@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   postgres:
     image: postgres
@@ -22,20 +23,69 @@ services:
       - "8092:8092"
     depends_on:
       - postgressb
+    deploy:
+        resources:
+            limits:
+              memory: 1.3G
+  employee-sb-native:
+    image: sb-employee-native:0.0.1-SNAPSHOT
+    ports:
+      - "8093:8092"
+    depends_on:
+      - postgressb
+    deploy:
+        resources:
+            limits:
+              memory: 1.3G
   employee-qk-jvm:
-    image: quarkus-employee-jvm:0.0.1-SNAPSHOT
+    image: quarkus-employee-jvm:0.0.2-SNAPSHOT
     ports:
       - "8081:8080"
     depends_on:
       - postgres
     restart: always
+    deploy:
+        resources:
+            limits:
+              memory: 1.3G
   employee-qk-native:
-    image: quarkus-employee-native:0.0.1-SNAPSHOT-scratch
+    image: quarkus-employee-native:0.0.2-SNAPSHOT-scratch
     ports:
       - "8082:8080"
     restart: always
     depends_on:
       - postgres
+    deploy:
+        resources:
+            limits:
+              memory: 1.3G
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    ports:
+      - 6000:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /home/pll/lib/docker/:/var/lib/docker:rw
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - /home/pll/grafana/data:/var/lib/grafana:rw
+# id of dashboard grafana metrics cadvisor: 10566
 volumes:
   pgdata:
   pgdatasb:

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: postgres-springboot-deploy
+  name: postgres-springboot-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-springboot-deploy
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: postgres-springboot-deploy
+    spec:
+      containers:
+      - image: postgres
+        name: postgres
+        env:
+          - name: POSTGRES_PASSWORD
+            value: postgres
+        ports:
+          - containerPort: 5432

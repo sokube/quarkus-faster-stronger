@@ -10,10 +10,10 @@ services:
     ports:
       - "5433:5432"
   employee-sb:
-    image: employee-sb:0.0.1-SNAPSHOT
+    image:  sb-employee-native:0.0.1-SNAPSHOT
     depends_on:
       - postgressb
     deploy:
-      replicas: 10
+      replicas: 20
 volumes:
   pgdatasb:

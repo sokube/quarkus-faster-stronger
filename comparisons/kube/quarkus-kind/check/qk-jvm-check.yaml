@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: curling-jvm-qk
+  name: curling-jvm-qk
+spec:
+  containers:
+  - args:
+    - sh
+    - -c
+    - while(true) do echo "requesting..."; wget -T1 -O- http://qk-jvm-employee:8081/hello ; sleep 0.2; done
+    image: busybox
+    name: curling-jvm-qk
+  restartPolicy: Always

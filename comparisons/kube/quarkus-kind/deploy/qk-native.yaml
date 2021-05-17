@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: qk-native-employee
+  name: qk-native-employee
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qk-native-employee
+  template:
+    metadata:
+      labels:
+        app: qk-native-employee
+    spec:
+      containers:
+      - image: quarkus-employee-native:0.0.2-SNAPSHOT-scratch
+        imagePullPolicy: IfNotPresent
+        name: qk-employee-native
+        ports:
+         - containerPort: 8080
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 1
+        resources:
+          limits:
+            memory: 500Mi
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

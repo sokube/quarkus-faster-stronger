@@ -5,7 +5,7 @@
 bin/
 
 # IntelliJ
-.idea
+.idea_back
 *.ipr
 *.iml
 *.iws
